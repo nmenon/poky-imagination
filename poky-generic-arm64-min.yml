@@ -1,0 +1,22 @@
+header:
+  version: 17
+
+distro: poky
+machine: genericarm64
+target:
+  - core-image-minimal
+
+repos:
+  poky:
+    url: https://git.yoctoproject.org/poky
+    branch: master
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+local_conf_header:
+  base: |
+    CONF_VERSION = "2"
+    INIT_MANAGER = "systemd"
+    EXTRA_IMAGE_FEATURES = "allow-empty-password empty-root-password allow-root-login"

@@ -1,0 +1,27 @@
+header:
+  version: 17
+
+distro: poky
+machine: genericarm64
+target:
+  - core-image-sato
+
+repos:
+  poky:
+    url: https://git.yoctoproject.org/poky
+    branch: master
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+local_conf_header:
+  base: |
+    CONF_VERSION = "2"
+    INIT_MANAGER = "systemd"
+    EXTRA_IMAGE_FEATURES = "allow-empty-password empty-root-password allow-root-login"
+    PACKAGECONFIG:append:pn-mesa = " gallium-llvm imagination zink"
+    SERIAL_CONSOLES = "115200;ttyAMA0 115200;hvc0 115200;ttyS2"
+    MACHINE_EXTRA_RRECOMMENDS = "linux-firmware-powervr"
+    DISTRO_FEATURES:remove = "3g"
+    INSANE_SKIP +=  "already-stripped"

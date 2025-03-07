@@ -1,0 +1,139 @@
+From cf378e11757d070efcbca01930e93f5b66c626f4 Mon Sep 17 00:00:00 2001
+From: Darren Etheridge <detheridge@ti.com>
+Date: Fri, 7 Mar 2025 08:26:00 -0600
+Subject: [PATCH] uses the IMG branch dev/zink in their private repo
+
+---
+ .../files/0001-fix-LLVMOpaqueModule.patch     | 24 +++++++++
+ meta/recipes-graphics/mesa/files/28520.patch  | 51 +++++++++++++++++++
+ meta/recipes-graphics/mesa/mesa.inc           | 15 +++---
+ 3 files changed, 81 insertions(+), 9 deletions(-)
+ create mode 100644 meta/recipes-graphics/mesa/files/0001-fix-LLVMOpaqueModule.patch
+ create mode 100644 meta/recipes-graphics/mesa/files/28520.patch
+
+diff --git a/meta/recipes-graphics/mesa/files/0001-fix-LLVMOpaqueModule.patch b/meta/recipes-graphics/mesa/files/0001-fix-LLVMOpaqueModule.patch
+new file mode 100644
+index 0000000000..f547179cfd
+--- /dev/null
++++ b/meta/recipes-graphics/mesa/files/0001-fix-LLVMOpaqueModule.patch
+@@ -0,0 +1,24 @@
++From 43614452ab6d72a0eae3714a5edfc33ac6896337 Mon Sep 17 00:00:00 2001
++From: archdevlab <146228772+archdevlab@users.noreply.github.com>
++Date: Mon, 1 Jul 2024 19:30:24 -0400
++Subject: [PATCH] fix LLVMOpaqueModule
++
++---
++ src/amd/llvm/ac_llvm_helper.cpp | 1 +
++ 1 file changed, 1 insertion(+)
++
++diff --git a/src/amd/llvm/ac_llvm_helper.cpp b/src/amd/llvm/ac_llvm_helper.cpp
++index 5d065279ad1..af4a50f8409 100644
++--- a/src/amd/llvm/ac_llvm_helper.cpp
+++++ b/src/amd/llvm/ac_llvm_helper.cpp
++@@ -8,6 +8,7 @@
++ #include <llvm/Analysis/TargetLibraryInfo.h>
++ #include <llvm/IR/IRBuilder.h>
++ #include <llvm/IR/LegacyPassManager.h>
+++#include <llvm/IR/Module.h>
++ #include <llvm/IR/Verifier.h>
++ #include <llvm/Target/TargetMachine.h>
++ #include <llvm/MC/MCSubtargetInfo.h>
++-- 
++2.45.2
++
+diff --git a/meta/recipes-graphics/mesa/files/28520.patch b/meta/recipes-graphics/mesa/files/28520.patch
+new file mode 100644
+index 0000000000..8cb8a067f6
+--- /dev/null
++++ b/meta/recipes-graphics/mesa/files/28520.patch
+@@ -0,0 +1,51 @@
++diff --git a/src/compiler/clc/clc_helpers.cpp b/src/compiler/clc/clc_helpers.cpp
++index 530196b832819b0b430bf04be5ea313d7f799bca..51ba9776befea31f9bb6a76f1a0c43797134d274 100644
++--- a/src/compiler/clc/clc_helpers.cpp
+++++ b/src/compiler/clc/clc_helpers.cpp
++@@ -91,13 +91,21 @@ static void
++ clc_dump_llvm(const llvm::Module *mod, FILE *f);
++ 
++ static void
+++#if LLVM_VERSION_MAJOR >= 19
+++llvm_log_handler(const ::llvm::DiagnosticInfo *di, void *data) {
+++#else
++ llvm_log_handler(const ::llvm::DiagnosticInfo &di, void *data) {
+++#endif
++    const clc_logger *logger = static_cast<clc_logger *>(data);
++ 
++    std::string log;
++    raw_string_ostream os { log };
++    ::llvm::DiagnosticPrinterRawOStream printer { os };
+++#if LLVM_VERSION_MAJOR >= 19
+++   di->print(printer);
+++#else
++    di.print(printer);
+++#endif
++ 
++    clc_error(logger, "%s", log.c_str());
++ }
++diff --git a/src/gallium/frontends/clover/llvm/invocation.cpp b/src/gallium/frontends/clover/llvm/invocation.cpp
++index 6ab32befbcd38a445b5cfeecd2931374679fab8c..d49578e1272a0292d2bad9a25ef04a3a74c0566f 100644
++--- a/src/gallium/frontends/clover/llvm/invocation.cpp
+++++ b/src/gallium/frontends/clover/llvm/invocation.cpp
++@@ -128,11 +128,20 @@ namespace {
++    }
++ 
++    void
+++#if LLVM_VERSION_MAJOR >= 19
+++   diagnostic_handler(const ::llvm::DiagnosticInfo *di, void *data) {
+++      if (di->getSeverity() == ::llvm::DS_Error) {
+++#else
++    diagnostic_handler(const ::llvm::DiagnosticInfo &di, void *data) {
++       if (di.getSeverity() == ::llvm::DS_Error) {
+++#endif
++          raw_string_ostream os { *reinterpret_cast<std::string *>(data) };
++          ::llvm::DiagnosticPrinterRawOStream printer { os };
+++#if LLVM_VERSION_MAJOR >= 19
+++         di->print(printer);
+++#else
++          di.print(printer);
+++#endif
++          throw build_error();
++       }
++    }
+diff --git a/meta/recipes-graphics/mesa/mesa.inc b/meta/recipes-graphics/mesa/mesa.inc
+index a3f7a0740b..4eb6d31da6 100644
+--- a/meta/recipes-graphics/mesa/mesa.inc
++++ b/meta/recipes-graphics/mesa/mesa.inc
+@@ -14,17 +14,14 @@ LIC_FILES_CHKSUM = "file://docs/license.rst;md5=63779ec98d78d823a9dc533a0735ef10
+ 
+ PE = "2"
+ 
+-SRC_URI = "https://mesa.freedesktop.org/archive/mesa-${PV}.tar.xz \
++SRC_URI = "https://gitlab.freedesktop.org/imagination/mesa/-/archive/dev/zink/mesa-dev-zink.tar.gz \
+            file://0001-meson-misdetects-64bit-atomics-on-mips-clang.patch \
+-           file://0001-drisw-fix-build-without-dri3.patch \
+-           file://0002-glxext-don-t-try-zink-if-not-enabled-in-mesa.patch \
+-           file://0001-Revert-meson-do-not-pull-in-clc-for-clover.patch \
+-           file://0001-amd-Include-missing-llvm-IR-header-Module.h.patch \
+-           file://0001-freedreno-don-t-encode-build-path-into-binaries.patch\
++           file://0001-fix-LLVMOpaqueModule.patch \
++           file://28520.patch \
+ "
+ 
+-SRC_URI[sha256sum] = "7454425f1ed4a6f1b5b107e1672b30c88b22ea0efea000ae2c7d96db93f6c26a"
+-PV = "24.0.7"
++SRC_URI[sha256sum] = "6cbd62732b0e673208838f2193be991d553ecb0c30e830da333e27561e68fd6b"
++PV = "dev-zink"
+ 
+ UPSTREAM_CHECK_GITTAGREGEX = "mesa-(?P<pver>\d+(\.\d+)+)"
+ 
+@@ -38,7 +35,7 @@ do_install:append() {
+   fi
+ }
+ 
+-DEPENDS = "expat makedepend-native flex-native bison-native libxml2-native zlib chrpath-replacement-native python3-mako-native gettext-native"
++DEPENDS = "expat glslang-native glslang libclc makedepend-native flex-native bison-native libxml2-native zlib chrpath-replacement-native python3-pyyaml python3-mako-native gettext-native"
+ DEPENDS:append:class-target = " ${@bb.utils.contains('PACKAGECONFIG', 'opencl', 'mesa-native', '', d)}"
+ EXTRANATIVEPATH += "chrpath-native"
+ PROVIDES = " \
+-- 
+2.34.1
+
