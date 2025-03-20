@@ -1,4 +1,4 @@
-FROM docker pull crops/poky:ubuntu-22.04
+FROM crops/poky:ubuntu-22.04
 
 USER root
 
