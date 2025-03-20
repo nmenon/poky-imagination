@@ -2,6 +2,8 @@ FROM ghcr.io/crops/poky:ubuntu-22.04
 
 USER root
 
+LABEL org.opencontainers.image.source  "https://github.com/nmenon/poky-imagination"
+
 # Proxy and other ti specific packages
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	apt-transport-https \
