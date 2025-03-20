@@ -7,17 +7,13 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	apt-transport-https \
 	socket \
 	corkscrew \
-	apt-utils
-
-# basic editor packages
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-	vim
-
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	apt-utils \
+	\
+	vim \
+	\
 	python3-pip python3-newt && \
-	python3 -m pip install kas
-
-RUN echo "**** cleanup ****" && \
+	python3 -m pip install kas && \
+	\
 	apt-get clean -y; \
 	rm -rf \
 		/tmp/* \
