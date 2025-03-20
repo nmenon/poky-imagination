@@ -4,6 +4,8 @@ USER root
 
 LABEL org.opencontainers.image.source  "https://github.com/nmenon/poky-imagination"
 LABEL org.opencontainers.image.description "Update of https://github.com/crops/poky-container/pkgs/container/poky to include kas and a reasonable dev env"
+# Follow the Crops license model
+LABEL org.opencontainers.image.licenses "GPL-v2"
 
 # Proxy and other ti specific packages
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
