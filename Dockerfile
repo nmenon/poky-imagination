@@ -1,4 +1,4 @@
-FROM crops/poky:ubuntu-22.04
+FROM ghcr.io/crops/poky:ubuntu-22.04
 
 USER root
 
