@@ -48,3 +48,26 @@ root/etc/default/weston -> add PVR_I_WANT_A_BROKEN_VULKAN_DRIVER=1
 
 Just put the sdcard, hdmi, keyboard etc, and power on, the board will automatically
 boot from the sdcard. No need to press any buttons.
+
+# Building:
+
+Simplest build is this:
+
+```
+kas-build.sh -e "kas build poky-generic-arm64-min.yml"
+```
+
+Let us say, you would like a rootfs as well, and a compressed wic image (unlike the default poky), then:
+
+```
+kas-build.sh -e "kas build poky-generic-arm64-min.ymlmage.yml:image.yml"
+```
+
+And to add to that, build on a with a sstate and download folder:
+
+* /OE is where sstate and download folders are located - different drive for OE builds.
+* build and workdir is on /OE/build-poky
+
+```
+kas-build.sh -e "kas build poky-generic-arm64-min.yml:caches.yml:image.yml" -c /OE -w /OE/build-poky
+```
