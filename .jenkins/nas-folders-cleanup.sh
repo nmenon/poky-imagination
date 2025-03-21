@@ -12,7 +12,7 @@ if [ -z "$1" ]; then
 else
 	cd $1
 fi
-if [ -z "$1" ]; then
+if [ -z "$2" ]; then
 	echo "Please provide num_folders to keep"
 	usage
 	exit 1
