@@ -1,0 +1,6 @@
+header:
+  version: 17
+
+local_conf_header:
+  base: |
+    IMAGE_FSTYPES += "wic.xz wic.bmap tar.xz"
