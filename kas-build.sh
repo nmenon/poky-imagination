@@ -4,7 +4,7 @@ DEFAULT_IMAGE=ghcr.io/nmenon/poky-crops-kas-env:latest
 IMG_NAME="${IMG_NAME:-$DEFAULT_IMAGE}"
 
 EXECUTE=""
-while getopts "c:l:w:b:e:?h" opt; do
+while getopts "c:l:w:b:C:e:?h" opt; do
 	case $opt in
 	c)
 		CACHE_FOLDER=$OPTARG
@@ -18,12 +18,15 @@ while getopts "c:l:w:b:e:?h" opt; do
 	b)
 		BUILD_DIR=$OPTARG
 	;;
+	C)
+		CLONE_DEPTH=$OPTARG
+	;;
 	e)
 		EXECUTE=$OPTARG
 	;;
 	?|h)
 		echo "Usage:"
-		echo "$0 [-c cache_folder_path] [-l oe_local_folder] [-w kas_work_dir] [-b kas_build_dir] [-e 'what to run']"
+		echo "$0 [-c cache_folder_path] [-l oe_local_folder] [-w kas_work_dir] [-C clone_depth] [-b kas_build_dir] [-e 'what to run']"
 		exit 0
 	;;
 	esac
@@ -74,6 +77,9 @@ if [ x"$WORK_DIR" != x ]; then
 		echo "$WORK_DIR build directory does'nt exist?"
 		exit 2
 	fi
+fi
+if [ x"$CLONE_DEPTH" != x ]; then
+	DOCKER_OPTIONS+=" -e KAS_CLONE_DEPTH=$CLONE_DEPTH"
 fi
 
 
