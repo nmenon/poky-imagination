@@ -116,7 +116,7 @@ fi
 
 APPEND_YML="caches.yml:image.yml"
 
-$BASE_DIR/kas-build.sh -c  $CACHE_FOLDER -w $WORK_FOLDER -e "kas build $BUILD_YML:$APPEND_YML"
+$BASE_DIR/kas-build.sh -C 1 -c  $CACHE_FOLDER -w $WORK_FOLDER -e "kas build $BUILD_YML:$APPEND_YML"
 
 YR=`date "+%Y"`
 LOCAL_FILES=`ls $ARTIFACT_FOLDER/*|grep -v $YR`
