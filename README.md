@@ -20,6 +20,7 @@ Poky, master branch, commit 64ad67cf6955cdaebbb3aec65318399013e09ce1
 Pure poky:
 
 * **poky-generic-arm64-min.yml** - minimal genericarm64 build
+* **poky-generic-arm64-full-cmd.yml** - full command line genericarm64 build
 
 We would like these to work (GUI):
 
