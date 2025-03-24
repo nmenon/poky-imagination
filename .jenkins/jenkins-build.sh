@@ -114,7 +114,7 @@ if [ ! -d "$CACHE_FOLDER" ]; then
 	mkdir -p $CACHE_FOLDER
 fi
 
-APPEND_YML="caches.yml:image.yml"
+APPEND_YML="caches.yml:image.yml:pokyuser.yml"
 
 $BASE_DIR/kas-build.sh -C 1 -c  $CACHE_FOLDER -w $WORK_FOLDER -e "kas build $BUILD_YML:$APPEND_YML"
 
