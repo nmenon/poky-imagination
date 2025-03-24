@@ -19,4 +19,5 @@ local_conf_header:
   base: |
     CONF_VERSION = "2"
     INIT_MANAGER = "systemd"
+    SERIAL_CONSOLES = "115200;ttyAMA0 115200;hvc0 115200;ttyS2"
     EXTRA_IMAGE_FEATURES = "allow-empty-password empty-root-password allow-root-login"
