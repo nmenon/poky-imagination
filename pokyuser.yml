@@ -1,0 +1,11 @@
+header:
+  version: 17
+
+local_conf_header:
+  base_user_append: |
+    INHERIT += "extrausers"
+    EXTRA_USERS_PARAMS = " \
+      groupadd developers; \
+      useradd -g developers -p '' pokyuser; \
+      usermod  -a -G sudo  pokyuser; \
+      passwd-expire pokyuser;"
