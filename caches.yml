@@ -2,7 +2,7 @@ header:
   version: 17
 
 local_conf_header:
-  base: |
+  base_cache_append: |
     DL_DIR = "/cache/downloads"
     CCACHE_TOP_DIR = "/cache/ccache"
     SSTATE_DIR = "/cache/sstate"
