@@ -57,7 +57,7 @@ if [ x"$CACHE_FOLDER" == x ]; then
 fi
 
 if [ ! -d "$CACHE_FOLDER" ]; then
-	echo "$CACHE_FOLDER build directory does'nt exist?"
+	echo "$CACHE_FOLDER cache directory does'nt exist?"
 	exit 2
 fi
 DOCKER_OPTIONS+=" -v $CACHE_FOLDER:/cache"
@@ -74,7 +74,7 @@ if [ x"$WORK_DIR" != x ]; then
 	KAS_WORK_DIR=/work
 	DOCKER_OPTIONS+=" -e KAS_WORK_DIR=/work -v $WORK_DIR:/work"
 	if [ ! -d "$WORK_DIR" ]; then
-		echo "$WORK_DIR build directory does'nt exist?"
+		echo "$WORK_DIR work directory does'nt exist?"
 		exit 2
 	fi
 fi
