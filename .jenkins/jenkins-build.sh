@@ -118,7 +118,7 @@ APPEND_YML="caches.yml:image.yml:pokyuser.yml"
 
 $BASE_DIR/kas-build.sh -C 1 -c  $CACHE_FOLDER -w $WORK_FOLDER -e "kas build $BUILD_YML:$APPEND_YML"
 $BASE_DIR/kas-build.sh -C 1 -c  $CACHE_FOLDER -w $WORK_FOLDER -e "kas dump $BUILD_YML:$APPEND_YML"| grep -v '^latest:'|grep -v '^Digest:'|grep -v ghcr.io >$ARTIFACT_FOLDER/$BUILD_YML
-$BASE_DIR/kas-build.sh -C 1 -c  $CACHE_FOLDER -w $WORK_FOLDER -e "kas dump lock $BUILD_YML:$APPEND_YML"
+$BASE_DIR/kas-build.sh -C 1 -c  $CACHE_FOLDER -w $WORK_FOLDER -e "kas lock $BUILD_YML:$APPEND_YML"
 cp $BASE_DIR/*lock.yml $ARTIFACT_FOLDER/
 
 YR=`date "+%Y"`
