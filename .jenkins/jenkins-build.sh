@@ -94,8 +94,8 @@ mkdir -p $WORK_FOLDER
 ssh $NAS_SSH ls -d $NAS_DIR || ssh $NAS_SSH mkdir -p $NAS_DIR
 
 # Check if we have spare storage in NAS
-NAS_SPACE=`ssh $NAS_SSH df  $NAS_DIR |grep -v "Used"|sed -e "s/\s\s*/|/g"|cut -d '|' -f4`
-MY_SPACE=`df  $WORK_DIR |grep -v "Used"|sed -e "s/\s\s*/|/g"|cut -d '|' -f4`
+NAS_SPACE=`ssh $NAS_SSH df  --block-size=1 $NAS_DIR |grep -v "Used"|sed -e "s/\s\s*/|/g"|cut -d '|' -f4`
+MY_SPACE=`df  --block-size=1 $WORK_DIR |grep -v "Used"|sed -e "s/\s\s*/|/g"|cut -d '|' -f4`
 
 if [ $NAS_SPACE -lt $MIN_SPACE_BYTES ]; then
 	echo "NAS IS RUNNING OUT OF SPACE. NOT BUILDING! $MIN_SPACE_BYTES < $NAS_SPACE"
