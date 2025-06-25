@@ -130,11 +130,11 @@ ssh $NAS_SSH mkdir -p $REMOTE_FOLDER
 scp $LOCAL_FILES $NAS_SSH:$REMOTE_FOLDER
 
 # Cleanup extra folders
-scp $SCRIPT_DIR/nas-folders-cleanup.sh $NAS_SSH:/tmp/nas-folder-cleanup-$MY_JOB_FOLDER.sh
+scp $SCRIPT_DIR/nas-folders-cleanup.sh $NAS_SSH:/$NAS_DIR/.nas-folder-cleanup-$MY_JOB_FOLDER.sh
 
 # Remove cleanup script from NAS
-ssh $NAS_SSH bash /tmp/nas-folder-cleanup-$MY_JOB_FOLDER.sh $NAS_DIR $KEEP_NUM_IMAGES
-ssh $NAS_SSH rm -f /tmp/nas-folder-cleanup-$MY_JOB_FOLDER.sh
+ssh $NAS_SSH bash /$NAS_DIR/.nas-folder-cleanup-$MY_JOB_FOLDER.sh $NAS_DIR $KEEP_NUM_IMAGES
+ssh $NAS_SSH rm -f /$NAS_DIR/.nas-folder-cleanup-$MY_JOB_FOLDER.sh
 
 # Clean up our Build to free up build server space
 if [ -d "$WORK_DIR" ]; then
