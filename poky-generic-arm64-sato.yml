@@ -24,4 +24,6 @@ local_conf_header:
     PACKAGECONFIG:append:pn-mesa = " gallium-llvm imagination zink"
     MACHINE_EXTRA_RRECOMMENDS = "linux-firmware-powervr"
     DISTRO_FEATURES:remove = "3g"
+    DISTRO_FEATURES:append = " wifi"
+    WIRELESS_DAEMON = "iwd"
     INSANE_SKIP +=  "already-stripped"

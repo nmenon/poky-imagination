@@ -25,5 +25,6 @@ local_conf_header:
     MACHINE_EXTRA_RRECOMMENDS = "linux-firmware-powervr"
     CORE_IMAGE_EXTRA_INSTALL = " vulkan-tools"
     DISTRO_FEATURES:remove = "3g"
-    DISTRO_FEATURES:append = " pam"
+    DISTRO_FEATURES:append = " pam wifi"
+    WIRELESS_DAEMON = "iwd"
     INSANE_SKIP +=  "already-stripped"
