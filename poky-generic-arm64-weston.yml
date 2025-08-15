@@ -15,6 +15,12 @@ repos:
       meta-poky:
       meta-yocto-bsp:
 
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    branch: master
+    layers:
+      meta-oe:
+
 local_conf_header:
   base: |
     CONF_VERSION = "2"
