@@ -43,7 +43,7 @@ if [ -z "$TZ" ]; then
 fi
 DOCKER_OPTIONS+=" -e TZ=$TZ"
 if [ -d $HOME/.ssh ]; then
-	DOCKER_OPTIONS+=" -v $HOME/.ssh:/home/pokyuser/.ssh"
+	DOCKER_OPTIONS+=" -v $HOME/.ssh:/home/pokyuser/.ssh:ro"
 fi
 
 if [ -n "$SSH_AUTH_SOCK" ]; then
