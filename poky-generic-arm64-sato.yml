@@ -2,16 +2,28 @@ header:
   version: 17
 
 distro: poky
+build_system: openembedded
 machine: genericarm64
 target:
   - core-image-sato
 
 repos:
-  poky:
-    url: https://git.yoctoproject.org/poky
+  bitbake:
+    url: https://git.openembedded.org/bitbake
+    branch: master
+    layers:
+      .: excluded
+
+  openembedded-core:
+    url: https://git.openembedded.org/openembedded-core
     branch: master
     layers:
       meta:
+
+  meta-yocto:
+    url: https://git.yoctoproject.org/meta-yocto
+    branch: master
+    layers:
       meta-poky:
       meta-yocto-bsp:
 
