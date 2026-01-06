@@ -1,8 +1,3 @@
-```
-BUILD is currently broken. See
-https://git.yoctoproject.org/poky/tree/README
-```
-
 # poky-imagination
 Let us see what it takes to get Poky working with upstream imagination for AM62x
 
@@ -31,6 +26,7 @@ We would like these to work (GUI):
 
 * **poky-generic-arm64-sato.yml** - sato build with X11 (and attempt at enabling imagination components)
 * **poky-generic-arm64-weston.yml** - weston build (and attempt at enabling imagination components)
+* **poky-generic-arm64-xfce.yml** - XFCE build (and attempt at enabling imagination components)
 
 Contribution by Darren:
 
