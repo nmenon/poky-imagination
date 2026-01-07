@@ -35,6 +35,9 @@ Contribution by Darren:
   you Mesa 24.1 + IMG vulkan and Zink patches that I can run Vulkan/GLES
   stuff on.
 
+# Additional KAS configuration files
+
+* cloud-utils-growpart.yml: Add to the list of yml to allow resulting image to resize sdcard to fill up the sd card on the very first boot.
 
 # BeaglePlay steps:
 

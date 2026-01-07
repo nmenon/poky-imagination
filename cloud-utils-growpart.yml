@@ -1,0 +1,13 @@
+header:
+  version: 17
+
+repos:
+  meta-cloud-utils-growpart:
+    url: https://github.com/nmenon/meta-cloud-utils-growpart.git
+    branch: main
+    layers:
+      meta-cloud-utils-growpart:
+
+local_conf_header:
+  growpart: |
+    IMAGE_INSTALL:append = " cloud-utils-growpart"
