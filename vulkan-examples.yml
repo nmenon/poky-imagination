@@ -1,0 +1,19 @@
+header:
+  version: 17
+
+repos:
+  meta-qt5:
+    url: https://github.com/meta-qt5/meta-qt5.git
+    branch: master
+    layers:
+      .:
+  meta-vulkan:
+    url: https://github.com/jwinarske/meta-vulkan.git
+    branch: master
+    layers:
+      .:
+
+local_conf_header:
+  vulkan_examples: |
+    CORE_IMAGE_EXTRA_INSTALL:append = " vulkan-tools vulkan-samples sascha-samples vkcube vulkan-caps-viewer"
+    DISTRO_FEATURES:append = " pam wifi opencl vulkan"

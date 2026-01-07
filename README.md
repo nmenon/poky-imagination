@@ -14,7 +14,6 @@ Poky, master branch, commit 64ad67cf6955cdaebbb3aec65318399013e09ce1
 | --------- | ----------- | ------------| -------- | ----------- |
 | AM62x     | BeaglePlay  | AXE         | NO       | 2025-05-07 |
 
-
 # Kas config Files:
 
 Pure poky:
@@ -28,16 +27,10 @@ We would like these to work (GUI):
 * **poky-generic-arm64-weston.yml** - weston build (and attempt at enabling imagination components)
 * **poky-generic-arm64-xfce.yml** - XFCE build (and attempt at enabling imagination components)
 
-Contribution by Darren:
-
-* **img-generic-arm64-weston.yml** (Thanks Darren)- Force update of
-  weston with clang and enable imagination components. this will give
-  you Mesa 24.1 + IMG vulkan and Zink patches that I can run Vulkan/GLES
-  stuff on.
-
 # Additional KAS configuration files
 
-* cloud-utils-growpart.yml: Add to the list of yml to allow resulting image to resize sdcard to fill up the sd card on the very first boot.
+* **cloud-utils-growpart.yml** - Add to the list of yml to allow resulting image to resize sdcard to fill up the sd card on the very first boot.
+* **vulkan-examples.yml** - Adds some basic vulkan utilities to build with weston - NOTE: vkmark build is broken, so not enabled.. vkcube etc works. (use with poky-generic-arm64-weston.yml)
 
 # BeaglePlay steps:
 
