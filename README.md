@@ -7,12 +7,36 @@ IMAGINATION GPUs on AM62x (AXE).
 
 # Status:
 
-Poky, master branch, commit 64ad67cf6955cdaebbb3aec65318399013e09ce1
-("bitbake: toaster/tests: Fix kirkstone test") 2025-05-07
+As of:
+
+```yaml
+header:
+    version: 14
+overrides:
+    repos:
+        bitbake:
+            commit: f23e186a75e71ba885b9b53a1dfda99af29c67b0
+        openembedded-core:
+            commit: 235e6d49e5888ad04416219e10b6df91a738661a
+        meta-yocto:
+            commit: e1363aa3333cda3a4ae4706ce6577b987ba3a815
+        meta-openembedded:
+            commit: 254f1285e8332f9c81bf1441f0098b0de4d2d745
+        meta-qt5:
+            commit: 9d9966d81d6a98876f3919127ece3a6829edf609
+        meta-vulkan:
+            commit: 038b4c7a29d11cb546aa7ffb963b4875a7677771
+```
 
 | Device    | Board       | Hardware IP | Status   | Status Date |
 | --------- | ----------- | ------------| -------- | ----------- |
-| AM62x     | BeaglePlay  | AXE         | NO       | 2025-05-07 |
+| AM62x     | BeaglePlay  | AXE         | Mostly(pending zink)       | 2026-01-08 |
+
+* vkcube works on weston image on BeaglePlay (see below)
+* vkmark had build issues (unrelated, some vulkan header mismatch)
+* zink support pending, so weston still uses s/w for compositing
+
+![BeaglePlay running 4.18 kernel, Mesa 25.3 and upstream GPU](./images/weston-vulkan-working-beagle-play.jpeg)
 
 # Kas config Files:
 
