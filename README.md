@@ -32,6 +32,9 @@ We would like these to work (GUI):
 * **cloud-utils-growpart.yml** - Add to the list of yml to allow resulting image to resize sdcard to fill up the sd card on the very first boot.
 * **vulkan-examples.yml** - Adds some basic vulkan utilities to build with weston - NOTE: vkmark build is broken, so not enabled.. vkcube etc works. (use with poky-generic-arm64-weston.yml)
 * **enable-powervr-weston.yml** - Add this so that we do not need to manually edit /etc/default/weston with PVR_I_WANT_A_BROKEN_VULKAN_DRIVER=1
+* **pokyuser.yml** - Adds a normal user called "pokyuser" instead of just root user.
+* **image.yml** - Generate a wic and tar output
+* **caches.yml** - Uses a caches path for sstate and downloads etc.
 
 # BeaglePlay steps:
 
