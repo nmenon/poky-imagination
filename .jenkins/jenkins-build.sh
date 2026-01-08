@@ -56,11 +56,6 @@ if [ x$BUILD_YML = x ]; then
 	usage
 	exit 1
 fi
-if [ ! -f "$BASE_DIR/$BUILD_YML" ]; then
-	echo "$BASE_DIR/$BUILD_YML Does not exist?"
-	usage
-	exit 1
-fi
 if [ x$NAS_SSH = x ]; then
 	echo "Please provide NAS SSH details"
 	usage
