@@ -39,12 +39,10 @@ We would like these to work (GUI):
 # BeaglePlay steps:
 
 * Update the board with https://rcn-ee.net/rootfs/debian-arm64-12-bookworm-xfce-v6.12-ti/2025-03-05/beagleplay-emmc-flasher-debian-12.9-xfce-arm64-2025-03-05-12gb.img.xz (in bootloader in emmc) or newer image
-* Build the corresponding kas configuration file (```kas build poky-generic-arm64-min.yml```)
+* Build the corresponding kas configuration file (``kas build poky-generic-arm64-weston.yml:enable-powervr-weston.yml:vulkan-examples.yml:caches.yml:image.yml:pokyuser.yml:cloud-utils-growpart.yml``)
 * just flash the wic image in ```build/tmp/deploy/images/genericarm64``` to sdcard.
-* Two manual modifications needed at the moment (cma=128M should dissappear with v6.15 or newer kernels)
-
+* Modify /etc/default/weston on sdcard as follows:
 ```
-boot/loader/entries/boot.conf -> add cma=128M to options
 root/etc/default/weston -> add PVR_I_WANT_A_BROKEN_VULKAN_DRIVER=1
 ```
 

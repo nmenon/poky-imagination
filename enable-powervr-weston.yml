@@ -2,11 +2,11 @@ header:
   version: 17
 
 repos:
-  meta-poky-broken-vulkan:
+  meta-powervr-broken-vulkan:
     url: https://github.com/nmenon/poky-imagination.git
     branch: main
     layers:
-      meta-poky-broken-vulkan:
+      meta-powervr-broken-vulkan:
 
 local_conf_header:
   weston-init-config: |
