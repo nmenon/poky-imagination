@@ -7,3 +7,7 @@ repos:
     branch: main
     layers:
       meta-poky-broken-vulkan:
+
+local_conf_header:
+  weston-init-config: |
+    PACKAGECONFIG:append:pn-weston-init = " no-idle-timeout"
